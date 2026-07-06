@@ -497,7 +497,154 @@ Text(
 
 ---
 
-## 七、运行验证
+## 七、Dart 项目结构分析
+
+### 目录树
+
+```
+dart_basics/
+├── bin/                        # 可执行入口（程序起点）
+│   ├── dart_basics.dart        # 默认入口文件
+│   └── variables.dart          # 我们写的练习代码
+├── lib/                        # 库代码（可复用的业务逻辑）
+│   └── dart_basics.dart        # 导出公共功能
+├── test/                       # 测试代码
+│   └── dart_basics_test.dart   # 单元测试
+├── .gitignore                  # Git 忽略规则
+├── CHANGELOG.md                # 版本变更记录
+├── README.md                   # 项目说明
+├── analysis_options.yaml       # 静态分析配置（lint 规则）
+└── pubspec.yaml                # 项目配置 + 依赖管理（核心）
+```
+
+### 各文件作用（类比 Node.js）
+
+#### 1. `pubspec.yaml` — 项目配置 + 依赖管理（最重要）
+
+**类比 `package.json`**，是 Dart 项目的核心配置文件。
+
+```yaml
+name: dart_basics              # 项目名（类比 package.json 的 name）
+description: A sample...        # 描述
+version: 1.0.0                 # 版本号（语义化版本）
+
+environment:
+  sdk: ^3.12.2                 # Dart SDK 版本要求（类比 engines 字段）
+
+dependencies:                  # 生产依赖（类比 dependencies）
+  path: ^1.9.0                 # ^ 表示兼容 1.9.0 但不兼容 2.0.0
+
+dev_dependencies:              # 开发依赖（类比 devDependencies）
+  lints: ^6.0.0                # 代码检查规则
+  test: ^1.25.6                # 测试框架
+```
+
+**关键差异**：
+- Node.js 用 `npm install` 装依赖，Dart 用 `dart pub get`
+- Node.js 依赖装在 `node_modules/`，Dart 装在全局缓存 `.dart_tool/`（不占项目空间）
+- `^1.9.0` 语义和 npm 的 `^1.9.0` 一致
+
+#### 2. `bin/` — 可执行入口
+
+**类比 Node.js 的 `bin/` 字段或 `index.js`**，是程序运行起点。
+
+```bash
+dart run bin/variables.dart    # 运行指定入口
+```
+
+- `dart_basics.dart` 是默认生成的入口，`main` 函数是程序起点
+- `variables.dart` 是我们加的练习文件，也可以独立运行
+- **bin 里的代码可以 import lib 里的库**
+
+#### 3. `lib/` — 库代码（业务逻辑）
+
+**类比 Node.js 的 `src/` 或 `lib/`**，放可复用的业务代码。
+
+```dart
+// lib/dart_basics.dart
+int calculate() {
+  return 6 * 7;
+}
+```
+
+```dart
+// bin/dart_basics.dart
+import 'package:dart_basics/dart_basics.dart' as dart_basics;
+// 导入 lib 里的代码，package:dart_basics/ 是项目名
+```
+
+**关键差异**：
+- Node.js 用 `require('./lib/xxx')` 相对路径导入
+- Dart 用 `package:项目名/文件名` 包名导入（更规范，不怕路径变）
+
+#### 4. `test/` — 测试代码
+
+**类比 Node.js 的 `__tests__/` 或 `*.test.js`**，放单元测试。
+
+```dart
+// test/dart_basics_test.dart
+import 'package:test/test.dart';
+import 'package:dart_basics/dart_basics.dart';
+
+void main() {
+  test('calculate returns 42', () {
+    expect(calculate(), 42);
+  });
+}
+```
+
+运行测试：`dart test`
+
+#### 5. `analysis_options.yaml` — 静态分析配置
+
+**类比 `.eslintrc.js` / `.eslintrc.json`**，配置代码检查规则。
+
+```yaml
+include: package:lints/recommended.yaml  # 使用推荐规则集
+# 类比 eslint:recommended
+```
+
+VS Code 会实时检查代码风格、潜在 bug，红线就是这里的规则触发的。
+
+#### 6. `.gitignore` — Git 忽略
+
+```gitignore
+.dart_tool/    # 类比 node_modules/，不提交到 git
+```
+
+#### 7. `CHANGELOG.md` / `README.md`
+
+- `CHANGELOG.md` — 版本变更记录（类比 Node 项目的 CHANGELOG）
+- `README.md` — 项目说明
+
+### Dart vs Node.js 项目结构对比
+
+| Dart 项目 | Node.js 项目 | 作用 |
+|-----------|-------------|------|
+| `pubspec.yaml` | `package.json` | 配置 + 依赖 |
+| `pubspec.lock` | `package-lock.json` | 锁定依赖版本 |
+| `.dart_tool/` | `node_modules/` | 依赖缓存（gitignore） |
+| `bin/` | `bin/` 或 `index.js` | 可执行入口 |
+| `lib/` | `src/` 或 `lib/` | 业务逻辑库 |
+| `test/` | `__tests__/` | 测试代码 |
+| `analysis_options.yaml` | `.eslintrc` | 代码检查规则 |
+| `dart pub get` | `npm install` | 安装依赖 |
+| `dart run` | `node` | 运行代码 |
+| `dart test` | `npm test` | 运行测试 |
+
+### Flutter 项目的结构差异（预告）
+
+Flutter 项目也是 `pubspec.yaml` + `lib/` 结构，但多了：
+- `lib/main.dart` — App 入口（不是 `bin/`）
+- `android/` / `ios/` — 原生工程目录（打包用）
+- `assets/` — 图片/字体等资源
+- 没有 `bin/`（Flutter App 不是命令行程序）
+
+明天写 Flutter 时你会看到这个差异。
+
+---
+
+## 八、运行验证
 
 ```bash
 cd e:\flutter\dart_basics
