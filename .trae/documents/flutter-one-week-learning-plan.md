@@ -85,6 +85,8 @@
 
 9. 运行 `flutter doctor` 检查环境，确保全部通过（如仍有 ✗，按提示逐项修复）
 
+> ✅ 已完成：2026-07-06 16:30（环境搭建全部通过：Flutter 3.44.4 + Dart 3.12.2 + Android SDK 36.1 + Pixel_7 模拟器 API 35，镜像变量+ANDROID_HOME+PATH 永久配置，cmdline-tools/latest 嵌套结构已修复，flutter.bat.lock 残留问题用 dart 直调 flutter_tools.snapshot 绕过）
+
 ### 知识点学习（下午 + 晚上）
 
 **Dart 基础语法【类比 JS】：**
