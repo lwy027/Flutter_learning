@@ -1,0 +1,77 @@
+# ==========================================
+# Flutter / Dart 学习工作区 .gitignore
+# 覆盖多个子项目（dart_basics / hello_flutter / ...）
+# ==========================================
+
+# --- Dart / Flutter ---
+**/.dart_tool/
+**/.packages
+**/build/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.fvm/
+**/.fvmrc
+
+# pubspec.lock：应用项目通常保留，但学习工作区子项目多，统一忽略避免噪音
+**/pubspec.lock
+
+# 生成文件
+**/*.freezed.dart
+**/*.g.dart
+**/*.mocks.dart
+**/generated_plugin_registrant.dart
+
+# --- Android ---
+**/android/.gradle/
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+**/android/key.properties
+**/*.keystore
+**/*.jks
+**/android/.cxx/
+
+# --- iOS ---
+**/ios/Flutter/.last_build_id
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/ephemeral
+**/ios/Flutter/app.flx
+**/ios/Flutter/app.zip
+**/ios/Flutter/flutter_assets/
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GeneratedPluginRegistrant.*
+
+# --- macOS ---
+**/macos/Flutter/ephemeral
+**/macos/Flutter/GeneratedPluginRegistrant.swift
+
+# --- Web ---
+**/web/icons/Icon-*.png
+**/web/icons/Icon-192.png
+**/web/icons/Icon-512.png
+**/web/manifest.json
+
+# --- IDE ---
+.idea/
+**/.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+**/.vscode/
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- 临时与日志 ---
+*.log
+*.tmp
+*.bak
