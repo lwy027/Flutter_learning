@@ -4,21 +4,77 @@
 
 // Dart 程序入口（类比 C/Java 的 main，JS 没有强制 main 但 Node 也有）
 void main() {
-  print('=== 1. 变量与常量 ===');
-  variablesDemo();
+  // print('=== 1. 变量与常量 ===');
+  // variablesDemo();
 
-  print('\n=== 2. 数据类型 ===');
-  typesDemo();
+  // print('\n=== 2. 数据类型 ===');
+  // typesDemo();
 
-  print('\n=== 3. 运算符 ===');
-  operatorsDemo();
+  // print('\n=== 3. 运算符 ===');
+  // operatorsDemo();
 
-  print('\n=== 4. 控制流 ===');
-  controlFlowDemo();
+  // print('\n=== 4. 控制流 ===');
+  // controlFlowDemo();
 
-  print('\n=== 5. 函数 ===');
-  functionsDemo();
+  // print('\n=== 5. 函数 ===');
+  // functionsDemo();
+  // sum1(1, 2);
+  // sum2(a: 1, b: 2);
+  // sum3(1);  // 位置参数：只传值，不写参数名
+  // test();
+  controlFlowDemoWithString('Tom', 25, '北京');  // 有值
+  controlFlowDemoWithString('Tom', 25, null);     // city 为 null，用默认值
+  controlFlowDemoWithString(null, null, null);    // 全部 null，用默认值
 }
+
+
+
+
+
+int sum1(int a, int b) {
+  return a + b;
+}
+
+int sum2({required int a, required int b}) {
+  return a + b;
+}
+
+// 全用命名参数（推荐）
+int sum3( int a, [int b = 0]) {
+  return a + b;
+}
+
+
+void test () {
+  // 级联运算符 ..：对同一对象连续调用方法，返回对象本身（不是返回值）
+  // 类比 JS 的链式调用 array.push(1).push(2)，但 JS 的 push 返回 length 不是数组
+  List<int> nums = []
+    ..add(1)   // ..add(1) 返回 nums 本身，继续操作
+    ..add(2)   // 等价于 nums.add(1); nums.add(2);
+    ..add(3);
+
+  print("nums $nums");  // nums [1, 2, 3]
+}
+
+
+
+
+void controlFlowDemoWithString(String? name, int? age, String? city) {
+  // 字符串插值中使用 ?? 必须用 ${} 包裹表达式
+  // $name 只能取变量值，不能写 $name ?? 'xxx'
+  print('你好我是 ${name ?? '匿名用户'}, 我今年 ${age ?? 100} 岁, 我来自 ${city ?? '上海'}');
+}
+
+
+
+
+
+
+
+
+
+
+
 
 // ============================================================
 // 1. 变量与常量
