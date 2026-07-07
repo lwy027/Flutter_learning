@@ -219,6 +219,62 @@ for (var entry in user.entries) { print('${entry.key}: ${entry.value}'); }
 - 访问不存在的键返回 `null`（不是 `undefined`）
 - `entries` 的元素是 `MapEntry` 对象（用 `.key` / `.value`），不是数组（不能 `[key, value]` 解构）
 
+#### 6. Set 去重集合
+
+**作用**：无重复值的集合，天然去重（类比 JS 的 `Set`）。
+
+**声明与基本操作**：
+
+```dart
+// 声明：用 {} + 泛型（⚠️ {} 默认是 Map，必须加泛型才是 Set）
+Set<int> nums = {1, 2, 3, 3}; // 重复的 3 自动去重 → {1, 2, 3}
+
+// 添加/删除
+nums.add(4);          // 添加（重复值自动忽略）
+nums.add(2);          // 2 已存在，忽略
+nums.remove(3);       // 删除
+nums.contains(2);     // 是否包含 → true
+nums.length;          // 元素个数（注意不是 size）
+```
+
+**遍历**（和 List 一样）：
+
+```dart
+for (var n in nums) { print(n); }
+nums.forEach((n) => print(n));
+```
+
+**集合运算**（JS 标准 Set 没有，需手写）：
+
+```dart
+Set<int> a = {1, 2, 3, 4};
+Set<int> b = {3, 4, 5, 6};
+
+a.intersection(b);  // 交集 → {3, 4}
+a.union(b);         // 并集 → {1, 2, 3, 4, 5, 6}
+a.difference(b);    // 差集 → {1, 2}（a 有 b 没有的）
+```
+
+**去重实战**：
+
+```dart
+List<int> ids = [1, 2, 2, 3, 3];
+List<int> uniqueIds = ids.toSet().toList();  // [1, 2, 3]
+// 等价于 JS 的 [...new Set(ids)]
+```
+
+**与 JS Set 对比**：
+
+| Dart Set | JS Set | 差异 |
+|----------|--------|------|
+| `final s = {1, 2, 3}` | `const s = new Set([1,2,3])` | Dart 有字面量语法 |
+| `s.add(4)` | `s.add(4)` | 一致 |
+| `s.remove(3)` | `s.delete(3)` | JS 用 `delete` |
+| `s.contains(2)` | `s.has(2)` | JS 用 `has` |
+| `s.length` | `s.size` | JS 用 `size` |
+| `intersection()` | 无 | JS 需手写 `filter` |
+| `union()` | 无 | JS 需手写 `new Set([...a, ...b])` |
+
 ### Flutter 场景预告
 
 - `List` 和 `Map` 在 Flutter 里极其常用——`ListView` 的数据源、JSON 解析结果

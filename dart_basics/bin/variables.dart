@@ -22,9 +22,10 @@ void main() {
   // sum2(a: 1, b: 2);
   // sum3(1);  // 位置参数：只传值，不写参数名
   // test();
-  controlFlowDemoWithString('Tom', 25, '北京');  // 有值
-  controlFlowDemoWithString('Tom', 25, null);     // city 为 null，用默认值
-  controlFlowDemoWithString(null, null, null);    // 全部 null，用默认值
+  // controlFlowDemoWithString('Tom', 25, '北京');  // 有值
+  // controlFlowDemoWithString('Tom', 25, null);     // city 为 null，用默认值
+  // controlFlowDemoWithString(null, null, null);    // 全部 null，用默认值
+  operatorsDemo()
 }
 
 
@@ -63,6 +64,43 @@ void controlFlowDemoWithString(String? name, int? age, String? city) {
   // 字符串插值中使用 ?? 必须用 ${} 包裹表达式
   // $name 只能取变量值，不能写 $name ?? 'xxx'
   print('你好我是 ${name ?? '匿名用户'}, 我今年 ${age ?? 100} 岁, 我来自 ${city ?? '上海'}');
+
+  // Map 声明：注意 String 首字母大写（不是 string）
+  Map<String, int> user = {'小明': 24, '小红': 25};
+
+  // 添加元素
+  user.addAll({'小绿': 26});  // 批量添加
+  user['晴天'] = 100;          // 下标赋值（添加/修改）
+
+  // 访问元素：字符串插值中用 ${user['key']} 避免引号冲突
+  print('user=$user');
+  print('user[小明]=${user['小明']}');  // 用双引号字符串避免单引号嵌套
+  print('user[小红]=${user['小红']}');
+
+  // 遍历方式 1：forEach
+  print('=== forEach 遍历 ===');
+  user.forEach((key, value) {  // 变量名小写 user（User 是类型名）
+    print('$key: $value');
+  });
+
+  // 遍历方式 2：for-in keys
+  print('=== keys 遍历 ===');
+  for (var key in user.keys) {
+    print('$key: ${user[key]}');
+  }
+
+  // 遍历方式 3：for-in values
+  print('=== values 遍历 ===');
+  for (var value in user.values) {
+    print('value: $value');
+  }
+
+  // 遍历方式 4：for-in entries
+  // ⚠️ Dart 的 entry 是 MapEntry 对象，不是数组，不能用 [key, value] 解构
+  print('=== entries 遍历 ===');
+  for (var entry in user.entries) {
+    print('${entry.key}: ${entry.value}');  // 用 .key 和 .value 访问
+  }
 }
 
 
@@ -257,6 +295,30 @@ void operatorsDemo() {
     ..add(2)
     ..add(3);
   print('级联: $nums');
+
+  // ========== Set 练习 ==========
+  print('--- Set 数据结构 ---');
+
+  // Set 声明（用 {}，但必须带泛型，否则 {} 是 Map）
+  Set<int> numbers = {1, 2, 3, 3}; // 重复的 3 自动去重 → {1, 2, 3}
+  print('Set 自动去重: $numbers');
+
+  // 添加元素
+  numbers.add(4);
+  numbers.add(2); // 2 已存在，忽略
+  print('添加后: $numbers');
+
+  // 删除元素
+  numbers.remove(1);
+  print('删除 1 后: $numbers');
+
+  // 包含判断
+  print('包含 3: ${numbers.contains(3)}');
+
+  // 遍历（和 List 一样）
+  for (var n in numbers) {
+    print('  元素: $n');
+  }
 }
 
 // ============================================================
